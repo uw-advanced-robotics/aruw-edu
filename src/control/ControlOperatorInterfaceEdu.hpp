@@ -25,7 +25,7 @@ class ControlOperatorInterfaceEdu {
      * right side, between -1 and 1.
      */
     static float getChassisYLeftTankInput();
-};
+};  // ControlOperatorInterfaceEdu
 
 }  // namespace control
 

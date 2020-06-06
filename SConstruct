@@ -67,6 +67,27 @@ ignored = [".lbuild_cache", build_path, "robot-type", "mcb-2019-2020"] + generat
 sources = env.FindSourceFiles(".", ignorePaths=ignored)
 
 program = env.Program(target=env["CONFIG_PROJECT_NAME"]+".elf", source=sources)
-env.Depends(target=program, dependency=abspath("mcb-2019-2020/mcb-2019-2020-project/modm/link/linkerscript.ld"))
 
-env.BuildTarget(sources)
+# Building application
+program = env.Program(target=env["CONFIG_PROJECT_NAME"]+".elf", source=sources)
+
+# This is a copy of the BuildTarget SCons functions from build_target.py, but the linker
+# path dependency is changed.
+env.Alias("qtcreator", env.QtCreatorProject(sources))
+env.Alias("symbols", env.Symbols(program))
+env.Alias("listing", env.Listing(program))
+env.Alias("bin", env.Bin(program))
+env.Alias("build", program)
+# The executable depends on the linkerscript
+env.Depends(target=program,
+            dependency=abspath("mcb-2019-2020/mcb-2019-2020-project/modm/link/linkerscript.ld"))
+env.Alias("size", env.Size(program))
+env.Alias("itm", env.OpenOcdItm())
+env.Alias("gdb", env.OpenOcdGdb(program))
+env.Alias("postmortem", env.PostMortemGdb(program))
+env.Alias("artifact", env.CacheArtifact(program))
+
+env.Alias("program", env.OpenOcd(program, commands=["modm_program {$SOURCE}"]))
+env.Alias("bmp", env.BlackMagicProbe(program))
+env.Alias("all", ["build", "size"])
+env.Default("all")

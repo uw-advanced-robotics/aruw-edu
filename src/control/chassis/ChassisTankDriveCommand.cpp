@@ -12,7 +12,7 @@ namespace aruwsrc {
 namespace chassis {
 
 ChassisTankDriveCommand::ChassisTankDriveCommand(ChassisSubsystem *const chassis) :
-        chassis_(chassis) {
+        chassis(chassis) {
     if (chassis == nullptr) {
         /// \todo we need to fix the error handling system.
         RAISE_ERROR("nullptr exception",
@@ -27,11 +27,11 @@ void ChassisTankDriveCommand::initialize() {}
 
 void ChassisTankDriveCommand::execute() {
     /// \todo
-    chassis_->setDesiredOutput(0, 0, 0, 0);
+    chassis->setDesiredOutput(0, 0, 0, 0);
 }
 
 void ChassisTankDriveCommand::end(bool) {
-    chassis_->setDesiredOutput(0, 0, 0, 0);
+    chassis->setDesiredOutput(0, 0, 0, 0);
 }
 
 bool ChassisTankDriveCommand::isFinished() const {
