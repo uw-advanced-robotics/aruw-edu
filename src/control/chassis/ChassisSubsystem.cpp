@@ -12,10 +12,10 @@ namespace chassis {
 
 void ChassisSubsystem::refresh() {}
 
-void ChassisSubsystem::setDesiredOutput(int16_t left_front_output,
-                                        int16_t left_back_output,
-                                        int16_t right_front_output,
-                                        int16_t right_back_output) {
+void ChassisSubsystem::setDesiredOutput(int16_t leftFrontOutput,
+                                        int16_t leftBackOutput,
+                                        int16_t rightFrontOutput,
+                                        int16_t rightBackOutput) {
     /// \todo
 }
 

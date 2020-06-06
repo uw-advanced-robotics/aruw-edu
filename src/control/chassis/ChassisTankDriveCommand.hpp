@@ -39,8 +39,8 @@ class ChassisTankDriveCommand : public Command {
     bool isFinished() const override;
 
  private:
-    ChassisSubsystem *const chassis_;
-};
+    ChassisSubsystem *const chassis;
+};  // ChassisTankDriveCommand
 
 }  // namespace chassis
 

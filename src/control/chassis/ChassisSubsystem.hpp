@@ -20,14 +20,14 @@ class ChassisSubsystem : public Subsystem {
      * the private section of this class.
      */
     ChassisSubsystem():
-        left_front_motor_(LEFT_FRONT_MOTOR_ID, CAN_BUS_MOTORS, false, "left front drive motor"),
-        left_back_motor_(LEFT_BACK_MOTOR_ID, CAN_BUS_MOTORS, false, "left back drive motor"),
-        right_front_motor_(RIGHT_FRONT_MOTOR_ID, CAN_BUS_MOTORS, false, "right front drive motor"),
-        right_back_motor_(RIGHT_BACK_MOTOR_ID, CAN_BUS_MOTORS, false, "right back drive motor"),
-        left_front_output_(0),
-        left_back_output_(0),
-        right_front_output_(0),
-        right_back_output_(0) {}
+        leftFrontMotor(LEFT_FRONT_MOTOR_ID, CAN_BUS_MOTORS, false, "left front drive motor"),
+        leftBackMotor(LEFT_BACK_MOTOR_ID, CAN_BUS_MOTORS, false, "left back drive motor"),
+        rightFrontMotor(RIGHT_FRONT_MOTOR_ID, CAN_BUS_MOTORS, false, "right front drive motor"),
+        rightBackMotor(RIGHT_BACK_MOTOR_ID, CAN_BUS_MOTORS, false, "right back drive motor"),
+        leftFrontOutput(0),
+        leftBackOutput(0),
+        rightFrontOutput(0),
+        rightBackOutput(0) {}
 
     ChassisSubsystem(const ChassisSubsystem &other) = delete;
 
@@ -39,23 +39,23 @@ class ChassisSubsystem : public Subsystem {
      * Handles input for controlling the chassis.  Any input specified here will be
      * relayed directly to the motor.
      *
-     * @param[in] left_front_output the current output for the left front motor.  The
+     * @param[in] leftFrontOutput the current output for the left front motor.  The
      *      current's sign is relative to the direction of movement of the chassis.  So,
      *      positive current to all motors should move the chassis forward, and negative
      *      to all motors should move the chassis backward.
-     * @param[in] left_back_output the current output for the  left back motor.  See
-     *      left_front_output for more information.
-     * @param[in] right_front_output current output for the right front motor.  See 
-     *      left_front_output for more information.
-     * @param[in] right_back_output current output for the right back motor.  See 
-     *      left_front_output for more information.
+     * @param[in] leftBackOutput the current output for the  left back motor.  See
+     *      leftFrontOutput for more information.
+     * @param[in] rightFrontOutput current output for the right front motor.  See 
+     *      leftFrontOutput for more information.
+     * @param[in] rightBackOutput current output for the right back motor.  See 
+     *      leftFrontOutput for more information.
      */
-    void setDesiredOutput(int16_t left_front_output, int16_t left_back_output,
-                          int16_t right_front_output, int16_t right_back_output);
+    void setDesiredOutput(int16_t leftFrontOutput, int16_t leftBackOutput,
+                          int16_t rightFrontOutput, int16_t rightBackOutput);
 
     /**
      * No-op function that is a placeholder because all interactions with motors are done
-     * in setDesiredOutput
+     * in setDesiredOutput.
      */
     void refresh() override;
 
@@ -71,25 +71,25 @@ class ChassisSubsystem : public Subsystem {
      */
     static constexpr float MAX_CURRENT_OUTPUT = 8000.0f;
 
-    /// Hardware constants, not specific to any particular chassis.
+    ///< Hardware constants, not specific to any particular chassis.
     static constexpr aruwlib::motor::MotorId RIGHT_FRONT_MOTOR_ID = aruwlib::motor::MOTOR1;
     static constexpr aruwlib::motor::MotorId LEFT_FRONT_MOTOR_ID  = aruwlib::motor::MOTOR2;
     static constexpr aruwlib::motor::MotorId LEFT_BACK_MOTOR_ID   = aruwlib::motor::MOTOR3;
     static constexpr aruwlib::motor::MotorId RIGHT_BACK_MOTOR_ID  = aruwlib::motor::MOTOR4;
     static constexpr aruwlib::can::CanBus CAN_BUS_MOTORS = aruwlib::can::CanBus::CAN_BUS2;
 
-    /// Motors.  Use these to interact with any dji style motors.
-    aruwlib::motor::DjiMotor left_front_motor_;
-    aruwlib::motor::DjiMotor left_back_motor_;
-    aruwlib::motor::DjiMotor right_front_motor_;
-    aruwlib::motor::DjiMotor right_back_motor_;
+    ///< Motors.  Use these to interact with any dji style motors.
+    aruwlib::motor::DjiMotor leftFrontMotor;
+    aruwlib::motor::DjiMotor leftBackMotor;
+    aruwlib::motor::DjiMotor rightFrontMotor;
+    aruwlib::motor::DjiMotor rightBackMotor;
 
-    /// Any user input is translated into desired current for each motor.
-    uint16_t left_front_output_;
-    uint16_t left_back_output_;
-    uint16_t right_front_output_;
-    uint16_t right_back_output_;
-};
+    ///< Any user input is translated into desired current for each motor.
+    uint16_t leftFrontOutput;
+    uint16_t leftBackOutput;
+    uint16_t rightFrontOutput;
+    uint16_t rightBackOutput;
+};  // class ChassisSubsystem
 
 }  // namespace chassis
 
