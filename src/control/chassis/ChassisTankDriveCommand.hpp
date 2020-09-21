@@ -20,7 +20,7 @@ class ChassisTankDriveCommand : public Command {
      * @param[in] chassis a pointer to the chassis to be passed in that this
      *      Command will interact with.
      */
-    explicit ChassisTankDriveCommand(ChassisSubsystem *const chassis);
+    ChassisTankDriveCommand(ChassisSubsystem *const chassis, aruwlib::Drivers *drivers);
 
     ChassisTankDriveCommand(const ChassisTankDriveCommand &other) = delete;
 
@@ -40,6 +40,8 @@ class ChassisTankDriveCommand : public Command {
 
  private:
     ChassisSubsystem *const chassis;
+
+    aruwlib::Drivers *drivers;
 };  // ChassisTankDriveCommand
 
 }  // namespace chassis

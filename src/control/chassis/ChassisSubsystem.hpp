@@ -19,11 +19,12 @@ class ChassisSubsystem : public Subsystem {
      * Constructs a new ChassisSubsystem with default parameters specified in
      * the private section of this class.
      */
-    ChassisSubsystem():
-        leftFrontMotor(LEFT_FRONT_MOTOR_ID, CAN_BUS_MOTORS, false, "left front drive motor"),
-        leftBackMotor(LEFT_BACK_MOTOR_ID, CAN_BUS_MOTORS, false, "left back drive motor"),
-        rightFrontMotor(RIGHT_FRONT_MOTOR_ID, CAN_BUS_MOTORS, false, "right front drive motor"),
-        rightBackMotor(RIGHT_BACK_MOTOR_ID, CAN_BUS_MOTORS, false, "right back drive motor"),
+    explicit ChassisSubsystem(aruwlib::Drivers *drivers) :
+        aruwlib::control::Subsystem(drivers),
+        leftFrontMotor(drivers, LEFT_FRONT_MOTOR_ID, CAN_BUS_MOTORS, false, "left front drive motor"),
+        leftBackMotor(drivers, LEFT_BACK_MOTOR_ID, CAN_BUS_MOTORS, false, "left back drive motor"),
+        rightFrontMotor(drivers, RIGHT_FRONT_MOTOR_ID, CAN_BUS_MOTORS, false, "right front drive motor"),
+        rightBackMotor(drivers, RIGHT_BACK_MOTOR_ID, CAN_BUS_MOTORS, false, "right back drive motor"),
         leftFrontOutput(0),
         leftBackOutput(0),
         rightFrontOutput(0),

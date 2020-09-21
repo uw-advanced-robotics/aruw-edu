@@ -27,8 +27,8 @@ if GetOption('num_jobs') == 1:
 print("Configured {0} parallel build jobs (-j{0})".format(GetOption('num_jobs')))
 
 # Building all libraries (read from sconscript files located in generated_paths)
-generated_paths = ["mcb-2019-2020/mcb-2019-2020-project/modm",
-                   "mcb-2019-2020/mcb-2019-2020-project/src/aruwlib"]
+generated_paths = ["aruw-mcb/aruw-mcb-project/modm",
+                   "aruw-mcb/aruw-mcb-project/src/aruwlib"]
 env.SConscript(dirs=generated_paths, exports="env")
 
 # References:
@@ -59,11 +59,11 @@ if 'additional-ccflags' in ARGUMENTS:
 
 # add this path so you don't have to write #include "src/..."
 env.AppendUnique(CPPPATH=[abspath(r"./src"),
-                          abspath(r"./mcb-2019-2020/mcb-2019-2020-project/robot-type"),
-                          abspath(r"./mcb-2019-2020/mcb-2019-2020-project/src")])
+                          abspath(r"./aruw-mcb/aruw-mcb-project/robot-type"),
+                          abspath(r"./aruw-mcb/aruw-mcb-project/src")])
 
 # don't compile this stuff
-ignored = [".lbuild_cache", build_path, "robot-type", "mcb-2019-2020"] + generated_paths
+ignored = [".lbuild_cache", build_path, "robot-type", "aruw-mcb"] + generated_paths
 sources = env.FindSourceFiles(".", ignorePaths=ignored)
 
 program = env.Program(target=env["CONFIG_PROJECT_NAME"]+".elf", source=sources)
@@ -80,7 +80,7 @@ env.Alias("bin", env.Bin(program))
 env.Alias("build", program)
 # The executable depends on the linkerscript
 env.Depends(target=program,
-            dependency=abspath("mcb-2019-2020/mcb-2019-2020-project/modm/link/linkerscript.ld"))
+            dependency=abspath("aruw-mcb/aruw-mcb-project/modm/link/linkerscript.ld"))
 env.Alias("size", env.Size(program))
 env.Alias("itm", env.OpenOcdItm())
 env.Alias("gdb", env.OpenOcdGdb(program))
