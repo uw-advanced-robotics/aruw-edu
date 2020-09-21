@@ -1,44 +1,102 @@
-#include <modm/processing/timer.hpp>
-
 #include <aruwlib/rm-dev-board-a/board.hpp>
-#include <aruwlib/communication/remote.hpp>
-#include <aruwlib/communication/can/can_rx_handler.hpp>
-#include <aruwlib/motor/dji_motor_tx_handler.hpp>
-#include <aruwlib/control/command_scheduler.hpp>
 
-#include "control/chassis/ChassisTankDriveCommand.hpp"
-#include "control/chassis/ChassisSubsystem.hpp"
+/* arch includes ------------------------------------------------------------*/
+#include <aruwlib/architecture/periodic_timer.hpp>
 
-/// \todo declare a new chassis drive subsystem
-aruwsrc::chassis::ChassisSubsystem soldierChassis;
+/* communication includes ---------------------------------------------------*/
+#include <aruwlib/DriversSingleton.hpp>
+#include <aruwlib/display/sh1106.hpp>
 
-/// \todo declare a new chassis tank drive command
-aruwsrc::chassis::ChassisTankDriveCommand tankDriveCommand(&soldierChassis);
+/* error handling includes --------------------------------------------------*/
 
-modm::ShortPeriodicTimer sendMotorTimeout(2);
-modm::ShortPeriodicTimer blinkLedTimer(500);
+/* control includes ---------------------------------------------------------*/
 
-int main() {
+using namespace modm::literals;
+using aruwlib::Drivers;
+
+/* define timers here -------------------------------------------------------*/
+aruwlib::arch::PeriodicMilliTimer sendMotorTimeout(2);
+
+// Place any sort of input/output initialization here. For example, place
+// serial init stuff here.
+void initializeIo(aruwlib::Drivers *drivers);
+
+// Anything that you would like to be called place here. It will be called
+// very frequently. Use PeriodicMilliTimers if you don't want something to be
+// called as frequently.
+void updateIo(aruwlib::Drivers *drivers);
+
+int main()
+{
+    /*
+     * NOTE: We are using DoNotUse_getDrivers here because in the main
+     *      robot loop we must access the singleton drivers to update
+     *      IO states and run the scheduler.
+     */
+    aruwlib::Drivers *drivers = aruwlib::DoNotUse_getDrivers();
+
     Board::initialize();
-    aruwlib::Remote::initialize();
+    initializeIo(drivers);
+    // aruwsrc::control::initSubsystemCommands(drivers);
 
-    /// \todo register the chassis subsystem here
+    while (1)
+    {
+        // do this as fast as you can
+        updateIo(drivers);
 
-    /// \todo add the chassis tank drive command as a default command for the chassis subsystem.
-
-    while (true) {
-        aruwlib::can::CanRxHandler::pollCanData();
-        aruwlib::Remote::read();
-
-        if (blinkLedTimer.execute()) {
-            Board::Leds::toggle();
+        if (sendMotorTimeout.execute())
+        {
+            drivers->mpu6500.read();
+            drivers->errorController.update();
+            drivers->commandScheduler.run();
+            drivers->djiMotorTxHandler.processCanSendData();
         }
-
-        if (sendMotorTimeout.execute()) {
-            aruwlib::control::CommandScheduler::getMainScheduler().run();
-            aruwlib::motor::DjiMotorTxHandler::processCanSendData();
-        }
+#ifndef ENV_SIMULATOR
         modm::delayMicroseconds(10);
+#endif
     }
     return 0;
+}
+
+void initializeIo(aruwlib::Drivers *drivers)
+{
+    drivers->analog.init();
+    drivers->pwm.init();
+    drivers->digital.init();
+    drivers->leds.init();
+    drivers->can.initialize();
+
+#ifndef ENV_SIMULATOR
+    /// \todo this should be an init in the display class
+    Board::DisplaySpiMaster::
+        connect<Board::DisplayMiso::Miso, Board::DisplayMosi::Mosi, Board::DisplaySck::Sck>();
+
+    // SPI1 is on ABP2 which is at 90MHz; use prescaler 64 to get ~fastest baud rate below 1mHz max
+    // 90MHz/64=~14MHz
+    Board::DisplaySpiMaster::initialize<Board::SystemClock, 1406250_Hz>();
+#endif
+    aruwlib::display::Sh1106<
+#ifndef ENV_SIMULATOR
+        Board::DisplaySpiMaster,
+        Board::DisplayCommand,
+        Board::DisplayReset,
+#endif
+        128,
+        64,
+        false>
+        display;
+    display.initializeBlocking();
+
+    drivers->remote.initialize();
+    drivers->mpu6500.init();
+    drivers->refSerial.initialize();
+    drivers->xavierSerial.initialize();
+}
+
+void updateIo(aruwlib::Drivers *drivers)
+{
+    drivers->canRxHandler.pollCanData();
+    drivers->xavierSerial.updateSerial();
+    drivers->refSerial.updateSerial();
+    drivers->remote.read();
 }

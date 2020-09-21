@@ -11,11 +11,12 @@ namespace aruwsrc {
 
 namespace chassis {
 
-ChassisTankDriveCommand::ChassisTankDriveCommand(ChassisSubsystem *const chassis) :
-        chassis(chassis) {
+ChassisTankDriveCommand::ChassisTankDriveCommand(ChassisSubsystem *const chassis, aruwlib::Drivers *drivers) :
+        chassis(chassis), drivers(drivers) {
     if (chassis == nullptr) {
         /// \todo we need to fix the error handling system.
-        RAISE_ERROR("nullptr exception",
+        RAISE_ERROR(drivers,
+                    "nullptr exception",
                     aruwlib::errors::SUBSYSTEM,
                     aruwlib::errors::ADDING_NULLPTR_COMMAND);
     } else {
