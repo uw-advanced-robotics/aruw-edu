@@ -79,7 +79,9 @@
         "./src",
         "./test",
         "./aruw-mcb/aruw-mcb-project/src",
-        "./aruw-mcb/aruw-mcb-project/robot-type"
+        "./aruw-mcb/aruw-mcb-project/robot-type",
+        "/usr/local/include",
+        "./aruw-mcb/aruw-mcb-project/test"
     ],
     "C_Cpp.default.cppStandard": "c++17",
     "C_Cpp.default.cStandard": "c11",
