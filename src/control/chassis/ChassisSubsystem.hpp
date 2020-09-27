@@ -6,6 +6,8 @@
 
 #include "control/ControlOperatorInterfaceEdu.hpp"
 
+#include "mock_macros.hpp"
+
 namespace control
 {
 namespace chassis
@@ -16,6 +18,17 @@ namespace chassis
 class ChassisSubsystem : public aruwlib::control::Subsystem
 {
 public:
+    /**
+     * This max output is measured in the c620 robomaster translated current.
+     * Per the datasheet, the controllable current range is -16384 ~ 0 ~ 16384.
+     * The corresponding speed controller output torque current range is
+     * -20 ~ 0 ~ 20 A.
+     *
+     * For this demo, we have capped the output at 8000. This should be more
+     * than enough for what you are doing.
+     */
+    static constexpr float MAX_CURRENT_OUTPUT = 8000.0f;
+
     /**
      * Constructs a new ChassisSubsystem with default parameters specified in
      * the private section of this class.
@@ -57,6 +70,8 @@ public:
 
     ChassisSubsystem &operator=(const ChassisSubsystem &other) = delete;
 
+    ~ChassisSubsystem() = default;
+
     void initialize() override;
 
     /**
@@ -76,7 +91,7 @@ public:
      * @param[in] rightBackOutput current output for the right back motor.  See
      *      leftFrontOutput for more information.
      */
-    void setDesiredOutput(int16_t leftSideOutput, int16_t rightSideOutput);
+    mockable void setDesiredOutput(int16_t leftSideOutput, int16_t rightSideOutput);
 
     /**
      * No-op function that is a placeholder because all interactions with motors are done
@@ -84,18 +99,12 @@ public:
      */
     void refresh() override;
 
-private:
-    /**
-     * This max output is measured in the c620 robomaster translated current.
-     * Per the datasheet, the controllable current range is -16384 ~ 0 ~ 16384.
-     * The corresponding speed controller output torque current range is
-     * -20 ~ 0 ~ 20 A.
-     *
-     * For this demo, we have capped the output at 8000. This should be more
-     * than enough for what you are doing.
-     */
-    static constexpr float MAX_CURRENT_OUTPUT = 8000.0f;
+    const aruwlib::motor::DjiMotor &getLeftFrontMotor() const { return leftFrontMotor; }
+    const aruwlib::motor::DjiMotor &getLeftBackMotor() const { return leftBackMotor; }
+    const aruwlib::motor::DjiMotor &getRightFrontMotor() const { return rightFrontMotor; }
+    const aruwlib::motor::DjiMotor &getRightBackMotor() const { return rightBackMotor; }
 
+private:
     ///< Hardware constants, not specific to any particular chassis.
     static constexpr aruwlib::motor::MotorId RIGHT_FRONT_MOTOR_ID = aruwlib::motor::MOTOR1;
     static constexpr aruwlib::motor::MotorId LEFT_FRONT_MOTOR_ID = aruwlib::motor::MOTOR2;

@@ -29,7 +29,7 @@ Soldier Build:
   stage: Verification
   script:
     - python3 $(which scons) build robot=TARGET_SOLDIER -j${NUM_JOBS}
-    - python3 $(which scons) run-tests robot=TARGET_SOLDIER -j${NUM_JOBS}
+    - python3 $(which scons) build-tests robot=TARGET_SOLDIER -j${NUM_JOBS}
   only: *default_only
 
 Soldier Solutions Build:
