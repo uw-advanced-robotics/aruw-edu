@@ -6,19 +6,25 @@
 using namespace aruwlib;
 using namespace aruwlib::algorithms;
 
-namespace aruwsrc {
-
-namespace chassis {
+namespace control
+{
+namespace chassis
+{
+void ChassisSubsystem::initialize()
+{
+    leftFrontMotor.initialize();
+    leftBackMotor.initialize();
+    rightFrontMotor.initialize();
+    rightBackMotor.initialize();
+}
 
 void ChassisSubsystem::refresh() {}
 
-void ChassisSubsystem::setDesiredOutput(int16_t leftFrontOutput,
-                                        int16_t leftBackOutput,
-                                        int16_t rightFrontOutput,
-                                        int16_t rightBackOutput) {
+void ChassisSubsystem::setDesiredOutput(int16_t leftSideOutput, int16_t rightSideOutput)
+{
     /// \todo
 }
 
 }  // namespace chassis
 
-}  // namespace aruwsrc
+}  // namespace control

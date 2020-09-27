@@ -50,6 +50,19 @@
             "options": {
                 "cwd": "${workspaceRoot}"
             }
+        },
+        {
+            "label": "Run Tests - Debug",
+            "type": "shell",
+            "presentation": {
+                "panel": "new"
+            },
+            "command": "/usr/bin/env python3 $(which scons) run-tests profile=debug",
+            "group": "build",
+            "problemMatcher": [],
+            "options": {
+                "cwd": "${workspaceRoot}"
+            }
         }
     ]
 }

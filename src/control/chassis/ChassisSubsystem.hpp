@@ -4,35 +4,60 @@
 #include <aruwlib/control/subsystem.hpp>
 #include <aruwlib/motor/dji_motor.hpp>
 
-using namespace aruwlib::control;
+#include "control/ControlOperatorInterfaceEdu.hpp"
 
-namespace aruwsrc {
-
-namespace chassis {
-
+namespace control
+{
+namespace chassis
+{
 /**
  * A bare bones Subsystem for interacting with a 4 wheeled chassis.
  */
-class ChassisSubsystem : public Subsystem {
- public:
+class ChassisSubsystem : public aruwlib::control::Subsystem
+{
+public:
     /**
      * Constructs a new ChassisSubsystem with default parameters specified in
      * the private section of this class.
      */
-    explicit ChassisSubsystem(aruwlib::Drivers *drivers) :
-        aruwlib::control::Subsystem(drivers),
-        leftFrontMotor(drivers, LEFT_FRONT_MOTOR_ID, CAN_BUS_MOTORS, false, "left front drive motor"),
-        leftBackMotor(drivers, LEFT_BACK_MOTOR_ID, CAN_BUS_MOTORS, false, "left back drive motor"),
-        rightFrontMotor(drivers, RIGHT_FRONT_MOTOR_ID, CAN_BUS_MOTORS, false, "right front drive motor"),
-        rightBackMotor(drivers, RIGHT_BACK_MOTOR_ID, CAN_BUS_MOTORS, false, "right back drive motor"),
-        leftFrontOutput(0),
-        leftBackOutput(0),
-        rightFrontOutput(0),
-        rightBackOutput(0) {}
+    ChassisSubsystem(aruwlib::Drivers *drivers)
+        : aruwlib::control::Subsystem(drivers),
+          leftFrontMotor(
+              drivers,
+              LEFT_FRONT_MOTOR_ID,
+              CAN_BUS_MOTORS,
+              false,
+              "left front drive motor"),
+          leftBackMotor(
+              drivers,
+              LEFT_BACK_MOTOR_ID,
+              CAN_BUS_MOTORS,
+              false,
+              "left back drive motor"),
+          rightFrontMotor(
+              drivers,
+              RIGHT_FRONT_MOTOR_ID,
+              CAN_BUS_MOTORS,
+              false,
+              "right front drive motor"),
+          rightBackMotor(
+              drivers,
+              RIGHT_BACK_MOTOR_ID,
+              CAN_BUS_MOTORS,
+              false,
+              "right back drive motor"),
+          leftFrontOutput(0),
+          leftBackOutput(0),
+          rightFrontOutput(0),
+          rightBackOutput(0)
+    {
+    }
 
     ChassisSubsystem(const ChassisSubsystem &other) = delete;
 
     ChassisSubsystem &operator=(const ChassisSubsystem &other) = delete;
+
+    void initialize() override;
 
     /**
      * \todo implement this function
@@ -46,13 +71,12 @@ class ChassisSubsystem : public Subsystem {
      *      to all motors should move the chassis backward.
      * @param[in] leftBackOutput the current output for the  left back motor.  See
      *      leftFrontOutput for more information.
-     * @param[in] rightFrontOutput current output for the right front motor.  See 
+     * @param[in] rightFrontOutput current output for the right front motor.  See
      *      leftFrontOutput for more information.
-     * @param[in] rightBackOutput current output for the right back motor.  See 
+     * @param[in] rightBackOutput current output for the right back motor.  See
      *      leftFrontOutput for more information.
      */
-    void setDesiredOutput(int16_t leftFrontOutput, int16_t leftBackOutput,
-                          int16_t rightFrontOutput, int16_t rightBackOutput);
+    void setDesiredOutput(int16_t leftSideOutput, int16_t rightSideOutput);
 
     /**
      * No-op function that is a placeholder because all interactions with motors are done
@@ -60,13 +84,13 @@ class ChassisSubsystem : public Subsystem {
      */
     void refresh() override;
 
- private:
+private:
     /**
      * This max output is measured in the c620 robomaster translated current.
      * Per the datasheet, the controllable current range is -16384 ~ 0 ~ 16384.
-     * The corresponding speed controller output torque current range is 
+     * The corresponding speed controller output torque current range is
      * -20 ~ 0 ~ 20 A.
-     * 
+     *
      * For this demo, we have capped the output at 8000. This should be more
      * than enough for what you are doing.
      */
@@ -74,9 +98,9 @@ class ChassisSubsystem : public Subsystem {
 
     ///< Hardware constants, not specific to any particular chassis.
     static constexpr aruwlib::motor::MotorId RIGHT_FRONT_MOTOR_ID = aruwlib::motor::MOTOR1;
-    static constexpr aruwlib::motor::MotorId LEFT_FRONT_MOTOR_ID  = aruwlib::motor::MOTOR2;
-    static constexpr aruwlib::motor::MotorId LEFT_BACK_MOTOR_ID   = aruwlib::motor::MOTOR3;
-    static constexpr aruwlib::motor::MotorId RIGHT_BACK_MOTOR_ID  = aruwlib::motor::MOTOR4;
+    static constexpr aruwlib::motor::MotorId LEFT_FRONT_MOTOR_ID = aruwlib::motor::MOTOR2;
+    static constexpr aruwlib::motor::MotorId LEFT_BACK_MOTOR_ID = aruwlib::motor::MOTOR3;
+    static constexpr aruwlib::motor::MotorId RIGHT_BACK_MOTOR_ID = aruwlib::motor::MOTOR4;
     static constexpr aruwlib::can::CanBus CAN_BUS_MOTORS = aruwlib::can::CanBus::CAN_BUS2;
 
     ///< Motors.  Use these to interact with any dji style motors.
@@ -94,6 +118,6 @@ class ChassisSubsystem : public Subsystem {
 
 }  // namespace chassis
 
-}  // namespace aruwsrc
+}  // namespace control
 
 #endif  // CHASSIS_SUBSYSTEM_HPP_

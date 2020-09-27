@@ -10,6 +10,7 @@
 /* error handling includes --------------------------------------------------*/
 
 /* control includes ---------------------------------------------------------*/
+#include "control/robot_control.hpp"
 
 using namespace modm::literals;
 using aruwlib::Drivers;
@@ -37,7 +38,7 @@ int main()
 
     Board::initialize();
     initializeIo(drivers);
-    // aruwsrc::control::initSubsystemCommands(drivers);
+    control::initSubsystemCommands(drivers);
 
     while (1)
     {

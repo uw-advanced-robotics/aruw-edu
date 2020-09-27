@@ -77,6 +77,7 @@
         "./aruw-mcb/aruw-mcb-project/modm/ext/cmsis/core",
         "./aruw-mcb/aruw-mcb-project/modm/ext/cmsis/device",
         "./src",
+        "./test",
         "./aruw-mcb/aruw-mcb-project/src",
         "./aruw-mcb/aruw-mcb-project/robot-type"
     ],
