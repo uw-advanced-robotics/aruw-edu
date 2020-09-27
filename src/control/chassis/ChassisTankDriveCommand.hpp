@@ -5,14 +5,13 @@
 
 #include "ChassisSubsystem.hpp"
 
-using namespace aruwlib::control;
-
-namespace aruwsrc {
-
-namespace chassis {
-
-class ChassisTankDriveCommand : public Command {
- public:
+namespace control
+{
+namespace chassis
+{
+class ChassisTankDriveCommand : public aruwlib::control::Command
+{
+public:
     /**
      * Initializes the command with the passed in ChassisSubsystem.  Must not
      * be nullptr.
@@ -20,13 +19,18 @@ class ChassisTankDriveCommand : public Command {
      * @param[in] chassis a pointer to the chassis to be passed in that this
      *      Command will interact with.
      */
-    ChassisTankDriveCommand(ChassisSubsystem *const chassis, aruwlib::Drivers *drivers);
+    ChassisTankDriveCommand(
+        ChassisSubsystem *const chassis,
+        aruwlib::Drivers *drivers,
+        ControlOperatorInterfaceEdu *controlOperatorInterfaceEdu);
 
     ChassisTankDriveCommand(const ChassisTankDriveCommand &other) = delete;
 
     ChassisTankDriveCommand &operator=(const ChassisTankDriveCommand &other) = delete;
 
     void initialize() override;
+
+    const char *getName() const { return "chassis tank drive command"; }
 
     /**
      * \todo
@@ -38,14 +42,16 @@ class ChassisTankDriveCommand : public Command {
 
     bool isFinished() const override;
 
- private:
+private:
     ChassisSubsystem *const chassis;
 
     aruwlib::Drivers *drivers;
+
+    ControlOperatorInterfaceEdu *controlOperatorInterfaceEdu;
 };  // ChassisTankDriveCommand
 
 }  // namespace chassis
 
-}  // namespace aruwsrc
+}  // namespace control
 
 #endif  // CHASSIS_TANK_DRIVE_COMMAND_HPP_
