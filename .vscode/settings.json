@@ -79,10 +79,10 @@
         "./src",
         "./test",
         "./aruw-mcb/aruw-mcb-project/src",
-        "./aruw-mcb/aruw-mcb-project/robot-type",
         "/usr/local/include",
-        "./aruw-mcb/aruw-mcb-project/test"
+        "./aruw-mcb/aruw-mcb-project/test",
     ],
+    "C_Cpp.default.forcedInclude": ["./aruw-mcb/aruw-mcb-project/test/robot_type.hpp"],
     "C_Cpp.default.cppStandard": "c++17",
     "C_Cpp.default.cStandard": "c11",
     "C_Cpp.default.intelliSenseMode": "gcc-x64"

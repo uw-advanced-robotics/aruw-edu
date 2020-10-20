@@ -134,8 +134,11 @@ sources = env.FindSourceFiles('.', ignorePaths=ignored_dirs, ignoreFiles=ignored
 # Substitute actual files if use solutions is specified
 if ARGUMENTS.get('use-solutions', 'false') == 'true':
     solution_sources = env.FindSourceFiles(SOLUTIONS_PATH)
+    ignored_solution_files = [ file.replace(SOURCE_PATH, SOLUTIONS_PATH) for file in ignored_files ]
     # find and replace each file from solution_sources
     for file in solution_sources:
+        if file in ignored_solution_files:
+            continue
         try:
             source_file_index = sources.index(file.replace(SOLUTIONS_PATH, SOURCE_PATH))
             sources[source_file_index] = file
