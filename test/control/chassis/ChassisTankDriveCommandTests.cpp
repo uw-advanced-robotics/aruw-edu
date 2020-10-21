@@ -24,10 +24,10 @@ TEST(ChassisTankDriveCommand, execute_zero_remote_input_zero_desired_output)
     ChassisSubsystemMock cs(&drivers);
     ControlOperatorInterfaceEduMock operatorInterface(&drivers);
     ChassisTankDriveCommand ctd(&cs, &drivers, &operatorInterface);
-    ON_CALL(operatorInterface, getChassisXLeftTankInput).WillByDefault([]() { return 0; });
-    ON_CALL(operatorInterface, getChassisYLeftTankInput).WillByDefault([]() { return 0; });
-    EXPECT_CALL(operatorInterface, getChassisXLeftTankInput).Times(1);
-    EXPECT_CALL(operatorInterface, getChassisYLeftTankInput).Times(1);
+    ON_CALL(operatorInterface, getChassisLeftTankInput).WillByDefault([]() { return 0; });
+    ON_CALL(operatorInterface, getChassisRightTankInput).WillByDefault([]() { return 0; });
+    EXPECT_CALL(operatorInterface, getChassisLeftTankInput).Times(1);
+    EXPECT_CALL(operatorInterface, getChassisRightTankInput).Times(1);
     EXPECT_CALL(cs, setDesiredOutput(0, 0));
 
     ctd.execute();
@@ -40,14 +40,14 @@ TEST(ChassisTankDriveCommand, execute_positive_remote_input_positive_desired_out
     ChassisSubsystemMock cs(&drivers);
     ControlOperatorInterfaceEduMock operatorInterface(&drivers);
     ChassisTankDriveCommand ctd(&cs, &drivers, &operatorInterface);
-    ON_CALL(operatorInterface, getChassisXLeftTankInput).WillByDefault([]() {
+    ON_CALL(operatorInterface, getChassisLeftTankInput).WillByDefault([]() {
         return DEFAULT_DESIRED_OUTPUT;
     });
-    ON_CALL(operatorInterface, getChassisYLeftTankInput).WillByDefault([]() {
+    ON_CALL(operatorInterface, getChassisRightTankInput).WillByDefault([]() {
         return DEFAULT_DESIRED_OUTPUT;
     });
-    EXPECT_CALL(operatorInterface, getChassisXLeftTankInput).Times(1);
-    EXPECT_CALL(operatorInterface, getChassisYLeftTankInput).Times(1);
+    EXPECT_CALL(operatorInterface, getChassisLeftTankInput).Times(1);
+    EXPECT_CALL(operatorInterface, getChassisRightTankInput).Times(1);
     EXPECT_CALL(
         cs,
         setDesiredOutput(
@@ -64,14 +64,14 @@ TEST(ChassisTankDriveCommand, execute_negative_remote_input_positive_desired_out
     ChassisSubsystemMock cs(&drivers);
     ControlOperatorInterfaceEduMock operatorInterface(&drivers);
     ChassisTankDriveCommand ctd(&cs, &drivers, &operatorInterface);
-    ON_CALL(operatorInterface, getChassisXLeftTankInput).WillByDefault([]() {
+    ON_CALL(operatorInterface, getChassisLeftTankInput).WillByDefault([]() {
         return -DEFAULT_DESIRED_OUTPUT;
     });
-    ON_CALL(operatorInterface, getChassisYLeftTankInput).WillByDefault([]() {
+    ON_CALL(operatorInterface, getChassisRightTankInput).WillByDefault([]() {
         return -DEFAULT_DESIRED_OUTPUT;
     });
-    EXPECT_CALL(operatorInterface, getChassisXLeftTankInput).Times(1);
-    EXPECT_CALL(operatorInterface, getChassisYLeftTankInput).Times(1);
+    EXPECT_CALL(operatorInterface, getChassisLeftTankInput).Times(1);
+    EXPECT_CALL(operatorInterface, getChassisRightTankInput).Times(1);
     EXPECT_CALL(
         cs,
         setDesiredOutput(

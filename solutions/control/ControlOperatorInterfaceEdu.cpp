@@ -5,12 +5,12 @@
 
 namespace control
 {
-float ControlOperatorInterfaceEdu::getChassisXLeftTankInput()
+float ControlOperatorInterfaceEdu::getChassisLeftTankInput()
 {
     return drivers->remote.getChannel(aruwlib::Remote::Channel::LEFT_VERTICAL);
 }
 
-float ControlOperatorInterfaceEdu::getChassisYLeftTankInput()
+float ControlOperatorInterfaceEdu::getChassisRightTankInput()
 {
     return drivers->remote.getChannel(aruwlib::Remote::Channel::RIGHT_VERTICAL);
 }

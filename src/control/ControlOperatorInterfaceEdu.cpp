@@ -5,13 +5,13 @@
 
 namespace control
 {
-float ControlOperatorInterfaceEdu::getChassisXLeftTankInput()
+float ControlOperatorInterfaceEdu::getChassisLeftTankInput()
 {
     /// \todo
     return 0.0f;
 }
 
-float ControlOperatorInterfaceEdu::getChassisYLeftTankInput()
+float ControlOperatorInterfaceEdu::getChassisRightTankInput()
 {
     /// \todo
     return 0.0f;

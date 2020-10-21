@@ -22,13 +22,13 @@ public:
      * Returns the value used for chassis tank drive movement forward and backward,
      * left side, between -1 and 1.
      */
-    mockable float getChassisXLeftTankInput();
+    mockable float getChassisLeftTankInput();
 
     /**
      * Returns the value used for chassis tank drive movement forward and backward,
      * right side, between -1 and 1.
      */
-    mockable float getChassisYLeftTankInput();
+    mockable float getChassisRightTankInput();
 
 private:
     aruwlib::Drivers *drivers;
