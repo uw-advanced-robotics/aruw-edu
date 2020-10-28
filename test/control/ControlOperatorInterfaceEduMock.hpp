@@ -14,8 +14,8 @@ public:
         : ControlOperatorInterfaceEdu(drivers)
     {
     }
-    MOCK_METHOD(float, getChassisXLeftTankInput, (), (override));
-    MOCK_METHOD(float, getChassisYLeftTankInput, (), (override));
+    MOCK_METHOD(float, getChassisLeftTankInput, (), (override));
+    MOCK_METHOD(float, getChassisRightTankInput, (), (override));
 };
 }  // namespace control
 

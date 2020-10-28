@@ -38,9 +38,9 @@ void ChassisTankDriveCommand::initialize() {}
 void ChassisTankDriveCommand::execute()
 {
     chassis->setDesiredOutput(
-        controlOperatorInterfaceEdu->getChassisXLeftTankInput() *
+        controlOperatorInterfaceEdu->getChassisLeftTankInput() *
             ChassisSubsystem::MAX_CURRENT_OUTPUT,
-        controlOperatorInterfaceEdu->getChassisYLeftTankInput() *
+        controlOperatorInterfaceEdu->getChassisRightTankInput() *
             ChassisSubsystem::MAX_CURRENT_OUTPUT);
 }
 
