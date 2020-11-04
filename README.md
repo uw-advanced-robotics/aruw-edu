@@ -1,0 +1,2 @@
+## Welcome to ARUW EDU
+This repo provides exercises to help familiarize new members with how stuff works on the Controls team. Click on ["Wiki"](https://gitlab.com/aruw/controls/aruw-edu/-/wikis/home) in the left side ribbon to view the exercises and read a better intro.
