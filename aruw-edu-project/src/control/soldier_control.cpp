@@ -24,6 +24,8 @@ namespace control
 
 /* define commands ----------------------------------------------------------*/
 
+/* define command mappings --------------------------------------------------*/
+
 /* register subsystems here -------------------------------------------------*/
 void registerSoldierSubsystems(aruwlib::Drivers *) {}
 
