@@ -2,16 +2,56 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Debug Tests",
+            "type": "cppdbg",
+            "request": "launch",
+            "preLaunchTask": "Build Tests - Debug",
+            "program": "${workspaceFolder}/aruw-edu-project/build/tests/debug/aruw-edu-tests.elf",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "Debug Sim",
+            "type": "cppdbg",
+            "request": "launch",
+            "preLaunchTask": "Build Sim - Debug",
+            "program": "${workspaceFolder}/aruw-edu-project/build/sim/debug/aruw-edu.elf",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "Debug MCB",
             "type": "cortex-debug",
             "request": "launch",
             "servertype": "openocd",
             "cwd": "${workspaceRoot}",
             "preLaunchTask": "Program - Debug",
-            "executable": "./aruw-mcb-project/build/debug/aruw-mcb.elf",
-            "name": "Debug",
+            "executable": "./aruw-edu-project/build/hardware/debug/aruw-edu.elf",
             "device": "STM32F427II",
             "configFiles": [
-                "./aruw-mcb-project/openocd.cfg"
+                "./aruw-edu-project/openocd.cfg"
             ]
         }
     ]

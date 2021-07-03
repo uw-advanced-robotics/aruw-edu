@@ -22,7 +22,7 @@ from SCons.Script import *
 
 
 # Define project settings and build paths
-PROJECT_NAME        = "template-project"
+PROJECT_NAME        = "aruw-edu"
 BUILD_PATH          = "build"
 HARDWARE_MODM_PATH  = "aruwlib/modm"
 HOSTED_MODM_PATH    = "aruwlib/sim-modm/modm"
