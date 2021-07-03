@@ -21,7 +21,7 @@ ChassisTankDriveCommand::ChassisTankDriveCommand(
     {
         return;
     }
-    addSubsystemRequirement(dynamic_cast<Subsystem *>(chassis));
+    addSubsystemRequirement(chassis);
 }
 
 void ChassisTankDriveCommand::initialize() {}
