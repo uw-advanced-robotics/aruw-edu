@@ -20,14 +20,15 @@ clang-format:
   stage: Verification
   script:
     - "python3 /run-clang-format.py --clang-format-executable clang-format-10 -r \
-       src/ \
-       test/ \
-       solutions"
+       aruw-edu-project/src/ \
+       aruw-edu-project/test/ \
+       aruw-edu-project/solutions"
   only: *default_only
 
 Soldier Build:
   stage: Verification
   script:
+    - cd aruw-edu-project
     - python3 $(which scons) build robot=TARGET_SOLDIER -j${NUM_JOBS}
     - python3 $(which scons) build-tests robot=TARGET_SOLDIER -j${NUM_JOBS}
   only: *default_only
@@ -35,6 +36,7 @@ Soldier Build:
 Soldier Solutions Build:
   stage: Verification
   script:
+    - cd aruw-edu-project
     - python3 $(which scons) build robot=TARGET_SOLDIER use-solutions=true -j${NUM_JOBS}
     - python3 $(which scons) run-tests robot=TARGET_SOLDIER use-solutions=true -j${NUM_JOBS}
   only: *default_only

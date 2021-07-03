@@ -2,6 +2,6 @@
 .vscode/.cortex-debug.registers.state.json
 .vscode/c_cpp_properties.json
 .sconsign.dblite
-*.pycW
+*.pyc
 project.xml.log
 build
