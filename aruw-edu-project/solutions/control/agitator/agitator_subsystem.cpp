@@ -48,8 +48,7 @@ float AgitatorSubsystem::getUncalibratedAngle() const
 {
     // position is equal to the following equation:
     // position = 2 * PI / encoder resolution * unwrapped encoder value / gear ratio
-    return (2.0f * M_PI /
-            static_cast<float>(tap::motor::DjiMotor::ENC_RESOLUTION)) *
+    return (2.0f * M_PI / static_cast<float>(tap::motor::DjiMotor::ENC_RESOLUTION)) *
            motor.getEncoderUnwrapped() / GEAR_RATIO;
 }
 
