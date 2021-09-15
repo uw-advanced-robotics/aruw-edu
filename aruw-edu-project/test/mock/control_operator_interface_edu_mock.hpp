@@ -10,7 +10,7 @@ namespace control
 class ControlOperatorInterfaceEduMock : public ControlOperatorInterfaceEdu
 {
 public:
-    ControlOperatorInterfaceEduMock(aruwlib::Drivers *drivers)
+    ControlOperatorInterfaceEduMock(tap::Drivers *drivers)
         : ControlOperatorInterfaceEdu(drivers)
     {
     }

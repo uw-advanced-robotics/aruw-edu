@@ -1,7 +1,7 @@
 #ifndef CHASSIS_TANK_DRIVE_COMMAND_HPP_
 #define CHASSIS_TANK_DRIVE_COMMAND_HPP_
 
-#include "aruwlib/control/command.hpp"
+#include "tap/control/command.hpp"
 
 #include "chassis_subsystem.hpp"
 
@@ -9,7 +9,7 @@ namespace control
 {
 namespace chassis
 {
-class ChassisTankDriveCommand : public aruwlib::control::Command
+class ChassisTankDriveCommand : public tap::control::Command
 {
 public:
     /**
@@ -19,7 +19,7 @@ public:
      * @param[in] chassis a pointer to the chassis to be passed in that this
      *      Command will interact with.
      */
-    ChassisTankDriveCommand(ChassisSubsystem *const chassis, aruwlib::Drivers *drivers);
+    ChassisTankDriveCommand(ChassisSubsystem *const chassis, tap::Drivers *drivers);
 
     ChassisTankDriveCommand(const ChassisTankDriveCommand &other) = delete;
 
@@ -42,7 +42,7 @@ public:
 private:
     ChassisSubsystem *const chassis;
 
-    aruwlib::Drivers *drivers;
+    tap::Drivers *drivers;
 };  // ChassisTankDriveCommand
 
 }  // namespace chassis

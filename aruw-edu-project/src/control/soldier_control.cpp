@@ -1,14 +1,14 @@
-#include "aruwlib/control/command_mapper.hpp"
-#include "aruwlib/drivers_singleton.hpp"
+#include "tap/control/command_mapper.hpp"
+#include "tap/drivers_singleton.hpp"
 
 #include "agitator/agitator_rotate_command.hpp"
 #include "agitator/agitator_subsystem.hpp"
 #include "chassis/chassis_subsystem.hpp"
 #include "chassis/chassis_tank_drive_command.hpp"
 
-using aruwlib::DoNotUse_getDrivers;
-using aruwlib::Remote;
-using aruwlib::control::CommandMapper;
+using tap::DoNotUse_getDrivers;
+using tap::Remote;
+using tap::control::CommandMapper;
 
 /*
  * NOTE: We are using the DoNotUse_getDrivers() function here
@@ -16,7 +16,7 @@ using aruwlib::control::CommandMapper;
  *      and thus we must pass in the single statically allocated
  *      Drivers class to all of these objects.
  */
-static aruwlib::driversFunc drivers = aruwlib::DoNotUse_getDrivers;
+static tap::driversFunc drivers = tap::DoNotUse_getDrivers;
 
 namespace control
 {
@@ -27,21 +27,21 @@ namespace control
 /* define command mappings --------------------------------------------------*/
 
 /* register subsystems here -------------------------------------------------*/
-void registerSoldierSubsystems(aruwlib::Drivers *) {}
+void registerSoldierSubsystems(tap::Drivers *) {}
 
 /* initialize subsystems ----------------------------------------------------*/
 void initializeSubsystems() {}
 
 /* set any default commands to subsystems here ------------------------------*/
-void setDefaultSoldierCommands(aruwlib::Drivers *) {}
+void setDefaultSoldierCommands(tap::Drivers *) {}
 
 /* add any starting commands to the scheduler here --------------------------*/
-void startSoldierCommands(aruwlib::Drivers *) {}
+void startSoldierCommands(tap::Drivers *) {}
 
 /* register io mappings here ------------------------------------------------*/
-void registerSoldierIoMappings(aruwlib::Drivers *) {}
+void registerSoldierIoMappings(tap::Drivers *) {}
 
-void initSubsystemCommands(aruwlib::Drivers *drivers)
+void initSubsystemCommands(tap::Drivers *drivers)
 {
     initializeSubsystems();
     registerSoldierSubsystems(drivers);

@@ -1,10 +1,10 @@
 #ifndef AGITATOR_SUBSYSTEM_HPP_
 #define AGITATOR_SUBSYSTEM_HPP_
 
-#include "aruwlib/communication/can/can.hpp"
-#include "aruwlib/control/subsystem.hpp"
-#include "aruwlib/motor/dji_motor.hpp"
-#include "aruwlib/util_macros.hpp"
+#include "tap/communication/can/can.hpp"
+#include "tap/control/subsystem.hpp"
+#include "tap/motor/dji_motor.hpp"
+#include "tap/util_macros.hpp"
 
 #include "algorithms/edu_pid.hpp"
 
@@ -12,13 +12,13 @@ namespace control
 {
 namespace agitator
 {
-class AgitatorSubsystem : public aruwlib::control::Subsystem
+class AgitatorSubsystem : public tap::control::Subsystem
 {
 public:
-    AgitatorSubsystem(aruwlib::Drivers *drivers)
-        : aruwlib::control::Subsystem(drivers),
+    AgitatorSubsystem(tap::Drivers *drivers)
+        : tap::control::Subsystem(drivers),
           pid(K_P, K_I, K_D, PID_MAX_I, PID_MAX_OUT),
-          motor(drivers, aruwlib::motor::MOTOR7, aruwlib::can::CanBus::CAN_BUS1, false, "agitator")
+          motor(drivers, tap::motor::MOTOR7, tap::can::CanBus::CAN_BUS1, false, "agitator")
     {
     }
 
@@ -51,7 +51,7 @@ private:
 
     algorithms::EduPid pid;
 
-    aruwlib::motor::DjiMotor motor;
+    tap::motor::DjiMotor motor;
 
     bool calibrateHere();
 

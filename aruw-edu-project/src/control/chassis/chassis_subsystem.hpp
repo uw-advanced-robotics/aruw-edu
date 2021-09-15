@@ -1,9 +1,9 @@
 #ifndef CHASSIS_SUBSYSTEM_HPP_
 #define CHASSIS_SUBSYSTEM_HPP_
 
-#include "aruwlib/control/subsystem.hpp"
-#include "aruwlib/motor/dji_motor.hpp"
-#include "aruwlib/util_macros.hpp"
+#include "tap/control/subsystem.hpp"
+#include "tap/motor/dji_motor.hpp"
+#include "tap/util_macros.hpp"
 
 #include "control/control_operator_interface_edu.hpp"
 
@@ -14,7 +14,7 @@ namespace chassis
 /**
  * A bare bones Subsystem for interacting with a 4 wheeled chassis.
  */
-class ChassisSubsystem : public aruwlib::control::Subsystem
+class ChassisSubsystem : public tap::control::Subsystem
 {
 public:
     /**
@@ -32,8 +32,8 @@ public:
      * Constructs a new ChassisSubsystem with default parameters specified in
      * the private section of this class.
      */
-    ChassisSubsystem(aruwlib::Drivers *drivers)
-        : aruwlib::control::Subsystem(drivers),
+    ChassisSubsystem(tap::Drivers *drivers)
+        : tap::control::Subsystem(drivers),
           leftFrontMotor(
               drivers,
               LEFT_FRONT_MOTOR_ID,
@@ -98,24 +98,24 @@ public:
      */
     void refresh() override;
 
-    const aruwlib::motor::DjiMotor &getLeftFrontMotor() const { return leftFrontMotor; }
-    const aruwlib::motor::DjiMotor &getLeftBackMotor() const { return leftBackMotor; }
-    const aruwlib::motor::DjiMotor &getRightFrontMotor() const { return rightFrontMotor; }
-    const aruwlib::motor::DjiMotor &getRightBackMotor() const { return rightBackMotor; }
+    const tap::motor::DjiMotor &getLeftFrontMotor() const { return leftFrontMotor; }
+    const tap::motor::DjiMotor &getLeftBackMotor() const { return leftBackMotor; }
+    const tap::motor::DjiMotor &getRightFrontMotor() const { return rightFrontMotor; }
+    const tap::motor::DjiMotor &getRightBackMotor() const { return rightBackMotor; }
 
 private:
     ///< Hardware constants, not specific to any particular chassis.
-    static constexpr aruwlib::motor::MotorId RIGHT_FRONT_MOTOR_ID = aruwlib::motor::MOTOR1;
-    static constexpr aruwlib::motor::MotorId LEFT_FRONT_MOTOR_ID = aruwlib::motor::MOTOR2;
-    static constexpr aruwlib::motor::MotorId LEFT_BACK_MOTOR_ID = aruwlib::motor::MOTOR3;
-    static constexpr aruwlib::motor::MotorId RIGHT_BACK_MOTOR_ID = aruwlib::motor::MOTOR4;
-    static constexpr aruwlib::can::CanBus CAN_BUS_MOTORS = aruwlib::can::CanBus::CAN_BUS2;
+    static constexpr tap::motor::MotorId RIGHT_FRONT_MOTOR_ID = tap::motor::MOTOR1;
+    static constexpr tap::motor::MotorId LEFT_FRONT_MOTOR_ID = tap::motor::MOTOR2;
+    static constexpr tap::motor::MotorId LEFT_BACK_MOTOR_ID = tap::motor::MOTOR3;
+    static constexpr tap::motor::MotorId RIGHT_BACK_MOTOR_ID = tap::motor::MOTOR4;
+    static constexpr tap::can::CanBus CAN_BUS_MOTORS = tap::can::CanBus::CAN_BUS2;
 
     ///< Motors.  Use these to interact with any dji style motors.
-    aruwlib::motor::DjiMotor leftFrontMotor;
-    aruwlib::motor::DjiMotor leftBackMotor;
-    aruwlib::motor::DjiMotor rightFrontMotor;
-    aruwlib::motor::DjiMotor rightBackMotor;
+    tap::motor::DjiMotor leftFrontMotor;
+    tap::motor::DjiMotor leftBackMotor;
+    tap::motor::DjiMotor rightFrontMotor;
+    tap::motor::DjiMotor rightBackMotor;
 
     ///< Any user input is translated into desired current for each motor.
     uint16_t leftFrontOutput;

@@ -73,11 +73,11 @@
     },
     "C_Cpp.errorSquiggles": "Enabled",
     "C_Cpp.default.includePath": [
-        "./aruw-edu-project/aruwlib/modm/src",
-        "./aruw-edu-project/aruwlib/modm/ext/cmsis/core",
-        "./aruw-edu-project/aruwlib/modm/ext/cmsis/device",
-        "./aruw-edu-project/aruwlib/src",
-        "./aruw-edu-project/aruwlib/test",
+        "./aruw-edu-project/taproot/modm/src",
+        "./aruw-edu-project/taproot/modm/ext/cmsis/core",
+        "./aruw-edu-project/taproot/modm/ext/cmsis/device",
+        "./aruw-edu-project/taproot/src",
+        "./aruw-edu-project/taproot/test",
         "./aruw-edu-project/src",
         "./aruw-edu-project/test",
         "/usr/local/include"
