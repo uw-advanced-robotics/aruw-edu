@@ -10,9 +10,7 @@ namespace mock
 class AgitatorSubsystemMock : public control::agitator::AgitatorSubsystem
 {
 public:
-    AgitatorSubsystemMock(tap::Drivers *drivers) : control::agitator::AgitatorSubsystem(drivers)
-    {
-    }
+    AgitatorSubsystemMock(tap::Drivers *drivers) : control::agitator::AgitatorSubsystem(drivers) {}
     MOCK_METHOD(void, refresh, (), (override));
     MOCK_METHOD(void, setDesiredAngle, (float newAngle), (override));
     MOCK_METHOD(float, getAngle, (), (const override));
