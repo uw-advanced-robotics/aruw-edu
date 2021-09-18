@@ -33,7 +33,7 @@ public:
      *
      * @param[in] error the error between the desired and actual value.
      * @param[in] dt the time difference between the previous and current iteration.
-     * @see aruwlib::arch::clock for measuring time.
+     * @see tap::arch::clock for measuring time.
      * @return the new output calculated by the PID controller.
      */
     float runControllerDerivateError(float error, float dt);

@@ -1,7 +1,7 @@
 #include "control/agitator/agitator_subsystem.hpp"
 
-#include "aruwlib/algorithms/math_user_utils.hpp"
-#include "aruwlib/architecture/clock.hpp"
+#include "tap/algorithms/math_user_utils.hpp"
+#include "tap/architecture/clock.hpp"
 
 namespace control
 {
@@ -12,7 +12,7 @@ void AgitatorSubsystem::refresh()
     if (isCalibrated)
     {
         actualAngle = getAngle();
-        uint32_t currTime = aruwlib::arch::clock::getTimeMilliseconds();
+        uint32_t currTime = tap::arch::clock::getTimeMilliseconds();
         uint32_t dt = currTime - prevTime;
         prevTime = currTime;
         pid.runControllerDerivateError(desiredAngle - actualAngle, dt);
@@ -48,8 +48,7 @@ float AgitatorSubsystem::getUncalibratedAngle() const
 {
     // position is equal to the following equation:
     // position = 2 * PI / encoder resolution * unwrapped encoder value / gear ratio
-    return (2.0f * aruwlib::algorithms::PI /
-            static_cast<float>(aruwlib::motor::DjiMotor::ENC_RESOLUTION)) *
+    return (2.0f * M_PI / static_cast<float>(tap::motor::DjiMotor::ENC_RESOLUTION)) *
            motor.getEncoderUnwrapped() / GEAR_RATIO;
 }
 

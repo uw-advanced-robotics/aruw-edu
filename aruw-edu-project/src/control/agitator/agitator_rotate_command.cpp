@@ -2,8 +2,8 @@
 
 #include <cmath>
 
-#include "aruwlib/algorithms/math_user_utils.hpp"
-#include "aruwlib/control/command.hpp"
+#include "tap/algorithms/math_user_utils.hpp"
+#include "tap/control/command.hpp"
 
 #include "control/agitator/agitator_subsystem.hpp"
 
@@ -23,7 +23,7 @@ void AgitatorRotateCommand::end(bool) { agitator->setDesiredAngle(agitator->getA
 
 bool AgitatorRotateCommand::isFinished() const
 {
-    return aruwlib::algorithms::compareFloatClose(
+    return tap::algorithms::compareFloatClose(
         agitator->getAngle(),
         agitator->getDesiredAngle(),
         FINISHED_EPSILON);

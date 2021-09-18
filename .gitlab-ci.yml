@@ -1,7 +1,7 @@
 # See aruw-mcb for Dockerfile associated with the default image
 
 default:
-  image: aruw/mcb-2020-gitlab-ci:2020-09-10.1
+  image: aruw/mcb-2020-gitlab-ci:2021-06-02.1
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
@@ -30,6 +30,7 @@ Soldier Build:
   script:
     - cd aruw-edu-project
     - python3 $(which scons) build robot=TARGET_SOLDIER -j${NUM_JOBS}
+    - python3 $(which scons) build-sim robot=TARGET_SOLDIER -j${NUM_JOBS}
     - python3 $(which scons) build-tests robot=TARGET_SOLDIER -j${NUM_JOBS}
   only: *default_only
 
@@ -38,5 +39,6 @@ Soldier Solutions Build:
   script:
     - cd aruw-edu-project
     - python3 $(which scons) build robot=TARGET_SOLDIER use-solutions=true -j${NUM_JOBS}
+    - python3 $(which scons) build-sim robot=TARGET_SOLDIER use-solutions=true -j${NUM_JOBS}
     - python3 $(which scons) run-tests robot=TARGET_SOLDIER use-solutions=true -j${NUM_JOBS}
   only: *default_only

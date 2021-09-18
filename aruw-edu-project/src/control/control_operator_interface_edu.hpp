@@ -1,10 +1,10 @@
 #ifndef CONTROL_OPERATOR_INTERFACE_EDU_HPP_
 #define CONTROL_OPERATOR_INTERFACE_EDU_HPP_
 
-#include "aruwlib/algorithms/linear_interpolation.hpp"
-#include "aruwlib/util_macros.hpp"
+#include "tap/algorithms/linear_interpolation.hpp"
+#include "tap/util_macros.hpp"
 
-namespace aruwlib
+namespace tap
 {
 class Drivers;
 }
@@ -19,7 +19,7 @@ namespace control
 class ControlOperatorInterfaceEdu
 {
 public:
-    ControlOperatorInterfaceEdu(aruwlib::Drivers *drivers) : drivers(drivers) {}
+    ControlOperatorInterfaceEdu(tap::Drivers *drivers) : drivers(drivers) {}
 
     /**
      * Returns the value used for chassis tank drive movement forward and backward,
@@ -34,7 +34,7 @@ public:
     mockable float getChassisRightTankInput();
 
 private:
-    aruwlib::Drivers *drivers;
+    tap::Drivers *drivers;
 };  // ControlOperatorInterfaceEdu
 
 }  // namespace control

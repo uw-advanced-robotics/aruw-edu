@@ -1,15 +1,15 @@
 #ifndef AGITATOR_ROTATE_COMMAND_HPP_
 #define AGITATOR_ROTATE_COMMAND_HPP_
 
-#include "aruwlib/algorithms/math_user_utils.hpp"
-#include "aruwlib/control/command.hpp"
+#include "tap/algorithms/math_user_utils.hpp"
+#include "tap/control/command.hpp"
 
 namespace control
 {
 namespace agitator
 {
 class AgitatorSubsystem;
-class AgitatorRotateCommand : public aruwlib::control::Command
+class AgitatorRotateCommand : public tap::control::Command
 {
 public:
     AgitatorRotateCommand(AgitatorSubsystem *sub, float rotateAngle)
@@ -29,7 +29,7 @@ public:
     const char *getName() const override { return "agitator rotate command"; }
 
 private:
-    static constexpr float FINISHED_EPSILON = aruwlib::algorithms::PI / 100;
+    static constexpr float FINISHED_EPSILON = M_PI / 100;
 
     AgitatorSubsystem *agitator;
 

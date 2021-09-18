@@ -1,6 +1,6 @@
 #include <gmock/gmock.h>
 
-#include "aruwlib/drivers.hpp"
+#include "tap/drivers.hpp"
 
 #include "control/agitator/agitator_rotate_command.hpp"
 #include "mock/agitator_subsystem_mock.hpp"
@@ -10,7 +10,7 @@ using namespace testing;
 
 TEST(AgitatorRotateCommand, initialize_sets_desired_angle_when_agitator_calibrated)
 {
-    aruwlib::Drivers d;
+    tap::Drivers d;
     mock::AgitatorSubsystemMock subMock(&d);
     AgitatorRotateCommand cmd(&subMock, 10.0f);
     EXPECT_CALL(subMock, calibrated).WillOnce(Return(true));
@@ -22,7 +22,7 @@ TEST(AgitatorRotateCommand, initialize_sets_desired_angle_when_agitator_calibrat
 
 TEST(AgitatorRotateCommand, initialize_does_not_set_desired_angle_when_agitator_not_calibrated)
 {
-    aruwlib::Drivers d;
+    tap::Drivers d;
     mock::AgitatorSubsystemMock subMock(&d);
     AgitatorRotateCommand cmd(&subMock, 10.0f);
     EXPECT_CALL(subMock, calibrated).WillOnce(Return(false));
@@ -35,7 +35,7 @@ TEST(
     AgitatorRotateCommand,
     isFinished_returns_false_if_desired_and_current_angle_not_within_tolerance)
 {
-    aruwlib::Drivers d;
+    tap::Drivers d;
     mock::AgitatorSubsystemMock subMock(&d);
     AgitatorRotateCommand cmd(&subMock, 10.0f);
     EXPECT_CALL(subMock, getAngle).WillRepeatedly(Return(10.0f));
@@ -46,7 +46,7 @@ TEST(
 
 TEST(AgitatorRotateCommand, isFinished_returns_true_if_desired_and_current_angle_within_tolerance)
 {
-    aruwlib::Drivers d;
+    tap::Drivers d;
     mock::AgitatorSubsystemMock subMock(&d);
     AgitatorRotateCommand cmd(&subMock, 10.0f);
     EXPECT_CALL(subMock, getAngle).WillRepeatedly(Return(10.0f));
@@ -57,7 +57,7 @@ TEST(AgitatorRotateCommand, isFinished_returns_true_if_desired_and_current_angle
 
 TEST(AgitatorRotateCommand, end_sets_desired_angle_to_current_angle)
 {
-    aruwlib::Drivers d;
+    tap::Drivers d;
     mock::AgitatorSubsystemMock subMock(&d);
     AgitatorRotateCommand cmd(&subMock, 10.0f);
     EXPECT_CALL(subMock, getAngle).Times(2).WillRepeatedly(Return(10.0f));
