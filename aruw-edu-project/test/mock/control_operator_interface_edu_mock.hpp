@@ -10,10 +10,7 @@ namespace control
 class ControlOperatorInterfaceEduMock : public ControlOperatorInterfaceEdu
 {
 public:
-    ControlOperatorInterfaceEduMock(aruwlib::Drivers *drivers)
-        : ControlOperatorInterfaceEdu(drivers)
-    {
-    }
+    ControlOperatorInterfaceEduMock(tap::Drivers *drivers) : ControlOperatorInterfaceEdu(drivers) {}
     MOCK_METHOD(float, getChassisLeftTankInput, (), (override));
     MOCK_METHOD(float, getChassisRightTankInput, (), (override));
 };

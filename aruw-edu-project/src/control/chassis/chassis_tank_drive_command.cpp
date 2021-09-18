@@ -1,11 +1,11 @@
 #include "chassis_tank_drive_command.hpp"
 
-#include "aruwlib/algorithms/math_user_utils.hpp"
-#include "aruwlib/errors/create_errors.hpp"
+#include "tap/algorithms/math_user_utils.hpp"
+#include "tap/errors/create_errors.hpp"
 
 #include "control/control_operator_interface_edu.hpp"
 
-using namespace aruwlib::control;
+using namespace tap::control;
 
 namespace control
 {
@@ -13,7 +13,7 @@ namespace chassis
 {
 ChassisTankDriveCommand::ChassisTankDriveCommand(
     ChassisSubsystem *const chassis,
-    aruwlib::Drivers *drivers)
+    tap::Drivers *drivers)
     : chassis(chassis),
       drivers(drivers)
 {

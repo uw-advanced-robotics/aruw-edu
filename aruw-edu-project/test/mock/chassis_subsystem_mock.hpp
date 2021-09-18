@@ -12,7 +12,7 @@ namespace chassis
 class ChassisSubsystemMock : public ChassisSubsystem
 {
 public:
-    ChassisSubsystemMock(aruwlib::Drivers *drivers) : ChassisSubsystem(drivers) {}
+    ChassisSubsystemMock(tap::Drivers *drivers) : ChassisSubsystem(drivers) {}
     MOCK_METHOD(
         void,
         setDesiredOutput,

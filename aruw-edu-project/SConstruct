@@ -24,12 +24,12 @@ from SCons.Script import *
 # Define project settings and build paths
 PROJECT_NAME        = "aruw-edu"
 BUILD_PATH          = "build"
-HARDWARE_MODM_PATH  = "aruwlib/modm"
-HOSTED_MODM_PATH    = "aruwlib/sim-modm/modm"
+HARDWARE_MODM_PATH  = "taproot/modm"
+HOSTED_MODM_PATH    = "taproot/sim-modm/modm"
 LINKERSCRIPT_FILE   = join(HARDWARE_MODM_PATH, "link/linkerscript.ld")
-ARUWLIB_SRC_PATH    = "aruwlib/src"
-ARUWLIB_PATH        = join(ARUWLIB_SRC_PATH, "aruwlib")
-ARUWLIB_TEST_PATH   = "aruwlib/test"
+TAPROOT_SRC_PATH    = "taproot/src"
+TAPROOT_PATH        = join(TAPROOT_SRC_PATH, "tap")
+TAPROOT_TEST_PATH   = "taproot/test"
 ARUWSRC_TEST_PATH   = "test"
 SOLUTIONS_PATH      = "solutions"
 
@@ -39,7 +39,7 @@ GTEST_LIBS          = ["gtest", "gtest_main", "gmock", "gmock_main"]
 COVERAGE_LIBS       = ["-lgcov"]
 
 # Don't compile this stuff
-ignored_dirs        = [".lbuild_cache", BUILD_PATH, HOSTED_MODM_PATH, HARDWARE_MODM_PATH, ARUWLIB_PATH, SOLUTIONS_PATH]
+ignored_dirs        = [".lbuild_cache", BUILD_PATH, HOSTED_MODM_PATH, HARDWARE_MODM_PATH, TAPROOT_PATH, SOLUTIONS_PATH]
 ignored_files       = [extract_robot_type.ROBOT_TYPE_FILE]
 # Don't compile this stuff when testing
 IGNORED_FILES_WHILE_TESTING = ["src/main.cpp", "src/control/soldier_control.cpp"]
@@ -55,11 +55,11 @@ if args["TARGET_ENV"] == "tests":
     ignored_files.extend(IGNORED_FILES_WHILE_TESTING)
 elif args["TARGET_ENV"] == "sim":
     modm_path = HOSTED_MODM_PATH
-    ignored_dirs.append(ARUWLIB_TEST_PATH)
+    ignored_dirs.append(TAPROOT_TEST_PATH)
     ignored_dirs.append(ARUWSRC_TEST_PATH)
 elif args["TARGET_ENV"] == "hardware":
     modm_path = HARDWARE_MODM_PATH
-    ignored_dirs.append(ARUWLIB_TEST_PATH)
+    ignored_dirs.append(TAPROOT_TEST_PATH)
     ignored_dirs.append(ARUWSRC_TEST_PATH)
 
 
@@ -81,8 +81,8 @@ print("Configured {0} parallel build jobs (-j{0}), {1}"
 
 
 # Building all libraries (read from sconscript files located in provided dirs)
-# Ensure that modm is first, since aruwlib depends on modm
-external_scons_libraries = [modm_path, ARUWLIB_PATH]
+# Ensure that modm is first, since taproot depends on modm
+external_scons_libraries = [modm_path, TAPROOT_PATH]
 env.SConscript(dirs=external_scons_libraries, exports="env")
 
 # References:
@@ -99,8 +99,8 @@ env.SConscript(dirs=external_scons_libraries, exports="env")
 
 # Add source directory to build path (for including header files)
 env.AppendUnique(CPPPATH=[
-    abspath(ARUWLIB_SRC_PATH),
-    abspath(ARUWLIB_TEST_PATH),
+    abspath(TAPROOT_SRC_PATH),
+    abspath(TAPROOT_TEST_PATH),
     abspath(r"./src")
 ])
 
@@ -132,7 +132,7 @@ elif args["TARGET_ENV"] == "tests":
     env.AppendUnique(CPPFLAGS=[
         "-DPLATFORM_HOSTED",
         "-DENV_UNIT_TESTS"])
-    env.AppendUnique(CPPPATH=[abspath(ARUWLIB_TEST_PATH)])
+    env.AppendUnique(CPPPATH=[abspath(TAPROOT_TEST_PATH)])
     env.AppendUnique(CPPPATH=[abspath(ARUWSRC_TEST_PATH)])
     env.AppendUnique(LIBS=GTEST_LIBS)
     env.AppendUnique(LIBS=HOSTED_LIBS)
@@ -141,7 +141,13 @@ elif args["TARGET_ENV"] == "tests":
     if COMMAND_LINE_TARGETS[0] == "run-tests-gcov":
         env.AppendUnique(CPPFLAGS=[
             "-fprofile-arcs",
-            "-ftest-coverage"])
+            "-ftest-coverage",
+            "-fno-inline",
+            "-fno-inline-small-functions",
+            "-fno-default-inline"])
+        env.Append(CCFLAGS='--coverage')
+        env.Append(LINKFLAGS='--coverage')
+
         env.AppendUnique(LIBS=COVERAGE_LIBS)
 else:  # hardware target env
     # Update linkerscript file
@@ -181,7 +187,7 @@ if args["TARGET_ENV"] == "hardware":
     program = env.Program(target=env["CONFIG_PROJECT_NAME"]+".elf", source=sources)
 
     # The executable depends on the linkerscript
-    env.Depends(target=program, dependency=abspath("aruwlib/modm/link/linkerscript.ld"))
+    env.Depends(target=program, dependency=abspath("taproot/modm/link/linkerscript.ld"))
 
     # Add target environment-specific SCons aliases
     # WARNING: all aliases must be checked during argument validation
