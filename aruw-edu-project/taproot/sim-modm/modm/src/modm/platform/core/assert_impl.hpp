@@ -13,6 +13,6 @@
 
 
 #define MODM_ASSERTION_HANDLER(handler) \
-	__attribute__((section("modm_assertion"), used)) \
+	__attribute__((section("__DATA,modm_assertion"), used)) \
 	const modm::AssertionHandler \
 	handler ## _assertion_handler_ptr = handler

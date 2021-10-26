@@ -35,7 +35,7 @@ SOLUTIONS_PATH      = "solutions"
 
 # Define libraries
 HOSTED_LIBS         = ["pthread"]
-GTEST_LIBS          = ["gtest", "gtest_main", "gmock", "gmock_main"]
+GTEST_LIBS          = ["-lgtest", "-lgtest_main", "-lgmock"]
 COVERAGE_LIBS       = ["-lgcov"]
 
 # Don't compile this stuff

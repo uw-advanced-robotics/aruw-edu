@@ -16,6 +16,8 @@ profile = ARGUMENTS.get("profile", "release")
 env["CONFIG_PROFILE"] = profile
 env["BUILDPATH"] = join(env["CONFIG_BUILD_BASE"], "scons-" + profile)
 env["BASEPATH"] = abspath("..")
+# Using homebrew gcc on macOS instead of clang
+env["COMPILERSUFFIX"] = env.Detect(["gcc-11", "gcc-10"])[3:]
 # SCons tools
 env.Append(toolpath=[
     abspath(r"scons/site_tools"),
@@ -93,10 +95,6 @@ env["ASFLAGS"] = [
 ]
 
 env["LINKFLAGS"] = [
-    "-Wl,--fatal-warnings",
-    "-Wl,--gc-sections",
-    "-Wl,--relax",
-    "-Wl,-Map,{target_base}.map,--cref".format(target_base="${TARGET.base}"),
 ]
 
 env["ARCHFLAGS"] = [
@@ -108,14 +106,13 @@ env.Append(CCFLAGS="$ARCHFLAGS")
 env.Append(ASFLAGS="$ARCHFLAGS")
 env.Append(LINKFLAGS="$ARCHFLAGS")
 
-# Search all linked static libraries multiple times
-env["_LIBFLAGS"] = "-Wl,--start-group " + env["_LIBFLAGS"] + " -Wl,--end-group"
 # Device configuration
-env["CONFIG_DEVICE_NAME"] = "hosted-linux"
+env["CONFIG_DEVICE_NAME"] = "hosted-darwin"
 # Programming configuration
 # XPCC generator tool path
 env["XPCC_SYSTEM_DESIGN"] = "$BASEPATH/modm/tools/xpcc_generator"
 env.AppendUnique(CPPPATH=[
+	"/usr/local/include",
     abspath(r"ext"),
     abspath(r"src"),
 ])
@@ -170,6 +167,7 @@ env.AppendUnique(LIBS=[
     library,
 ])
 env.AppendUnique(LIBPATH=[
+	"/usr/local/lib",
     abspath(str(library[0].get_dir())),
 ])
 for flags in ["CCFLAGS", "CFLAGS", "CXXFLAGS", "ASFLAGS", "ARCHFLAGS", "LINKFLAGS"]:
