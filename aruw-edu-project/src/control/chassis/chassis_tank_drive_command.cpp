@@ -1,6 +1,7 @@
 #include "chassis_tank_drive_command.hpp"
 
 #include "tap/algorithms/math_user_utils.hpp"
+#include "tap/drivers.hpp"
 #include "tap/errors/create_errors.hpp"
 
 #include "control/control_operator_interface_edu.hpp"
