@@ -4,6 +4,7 @@
 #include "tap/errors/create_errors.hpp"
 
 #include "control/control_operator_interface_edu.hpp"
+#include "tap/drivers.hpp"
 
 using namespace tap::control;
 
@@ -29,7 +30,10 @@ void ChassisTankDriveCommand::initialize() {}
 void ChassisTankDriveCommand::execute()
 {
     /// \todo
-    chassis->setDesiredOutput(0, 0);
+    
+    chassis->setDesiredOutput(drivers->controlOperatorInterfaceEdu.getChassisLeftTankInput() * ChassisSubsystem::MAX_CURRENT_OUTPUT, 
+                                drivers->controlOperatorInterfaceEdu.getChassisRightTankInput() * ChassisSubsystem::MAX_CURRENT_OUTPUT);
+    
 }
 
 void ChassisTankDriveCommand::end(bool) { chassis->setDesiredOutput(0, 0); }
