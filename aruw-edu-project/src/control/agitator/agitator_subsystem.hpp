@@ -47,7 +47,6 @@ private:
     bool isCalibrated = false;
     float agitatorCalibratedZeroAngle = 0.0f;
     int64_t prevTime = 0;
-    int64_t prevDt = 0;  // todo this is my implementation, remove.
 
     algorithms::EduPid pid;
 
