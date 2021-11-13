@@ -9,15 +9,17 @@ namespace algorithms
 float EduPid::runControllerDerivateError(float error, float dt)
 {
     /// \todo
+    if (dt == 0.0) {
+        return 0.0f;
+    }
     currErrorP = kp * error;
     currErrorD = (error - prevError) / dt;
     currErrorD = kd * currErrorD;
     prevError = error;
-    currErrorI = currErrorI + (error * dt);
-    currErrorI = ki * currErrorI;
-    tap::algorithms::limitVal(currErrorI, -maxICumulative, maxICumulative);
+    currErrorI = currErrorI + (ki * error * dt);
+    currErrorI = maxICumulative == 0.0 ? 0.0 : tap::algorithms::limitVal(currErrorI, -maxICumulative, maxICumulative);
     output = currErrorI + currErrorP + currErrorD;
-    tap::algorithms::limitVal(output, -maxOutput, maxOutput);
+    output = maxOutput == 0.0 ? 0.0 : tap::algorithms::limitVal(output, -maxOutput, maxOutput);
     return output;
 }
 
