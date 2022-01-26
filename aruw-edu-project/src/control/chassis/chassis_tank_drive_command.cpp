@@ -14,9 +14,11 @@ namespace chassis
 {
 ChassisTankDriveCommand::ChassisTankDriveCommand(
     ChassisSubsystem *const chassis,
-    tap::Drivers *drivers)
+    tap::Drivers *drivers,
+    ControlOperatorInterfaceEdu *controlOperatorInterfaceEdu)
     : chassis(chassis),
-      drivers(drivers)
+      drivers(drivers),
+      controlOperatorInterfaceEdu(controlOperatorInterfaceEdu)
 {
     if (chassis == nullptr)
     {
@@ -30,7 +32,8 @@ void ChassisTankDriveCommand::initialize() {}
 void ChassisTankDriveCommand::execute()
 {
     /// \todo
-    chassis->setDesiredOutput(0, 0);
+   chassis->setDesiredOutput(drivers->controlOperatorInterfaceEdu.getChassisLeftTankInput() * chassis->MAX_CURRENT_OUTPUT, 
+   drivers->controlOperatorInterfaceEdu.getChassisRightTankInput() * chassis->MAX_CURRENT_OUTPUT);
 }
 
 void ChassisTankDriveCommand::end(bool) { chassis->setDesiredOutput(0, 0); }

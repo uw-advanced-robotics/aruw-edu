@@ -19,7 +19,9 @@ namespace control
 class ControlOperatorInterfaceEdu
 {
 public:
-    ControlOperatorInterfaceEdu(tap::Drivers *drivers) : drivers(drivers) {}
+    ControlOperatorInterfaceEdu(tap::Drivers *drivers) : drivers(drivers) {
+        
+    }
 
     /**
      * Returns the value used for chassis tank drive movement forward and backward,

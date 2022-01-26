@@ -20,20 +20,29 @@ static tap::driversFunc drivers = tap::DoNotUse_getDrivers;
 
 namespace control
 {
+    ControlOperatorInterfaceEdu controlOperatorInterfaceEdu(drivers());
+
 /* define subsystems --------------------------------------------------------*/
+
+chassis::ChassisSubsystem chassisSubsystem(drivers());
+chassis::ChassisTankDriveCommand chassisTankDriveCommand(&chassisSubsystem, drivers());
 
 /* define commands ----------------------------------------------------------*/
 
 /* define command mappings --------------------------------------------------*/
 
 /* register subsystems here -------------------------------------------------*/
-void registerSoldierSubsystems(tap::Drivers *) {}
+void registerSoldierSubsystems(tap::Drivers *drivers) {
+    drivers->commandScheduler.registerSubsystem(&chassisSubsystem);
+}
 
 /* initialize subsystems ----------------------------------------------------*/
 void initializeSubsystems() {}
 
 /* set any default commands to subsystems here ------------------------------*/
-void setDefaultSoldierCommands(tap::Drivers *) {}
+void setDefaultSoldierCommands(tap::Drivers *drivers) {
+    chassisSubsystem.setDefaultCommand(&chassisTankDriveCommand);
+}
 
 /* add any starting commands to the scheduler here --------------------------*/
 void startSoldierCommands(tap::Drivers *) {}
