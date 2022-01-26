@@ -92,6 +92,7 @@ public:
      */
     mockable void setDesiredOutput(int16_t leftSideOutput, int16_t rightSideOutput);
 
+
     /**
      * No-op function that is a placeholder because all interactions with motors are done
      * in setDesiredOutput.

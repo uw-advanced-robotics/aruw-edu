@@ -42,7 +42,7 @@ public:
 private:
     ChassisSubsystem *const chassis;
 
-    tap::Drivers *drivers;
+    tap::Drivers *drivers
 };  // ChassisTankDriveCommand
 
 }  // namespace chassis

@@ -23,6 +23,22 @@ void ChassisSubsystem::refresh() {}
 void ChassisSubsystem::setDesiredOutput(int16_t leftSideOutput, int16_t rightSideOutput)
 {
     /// \todo
+    if (leftSideOutput > MAX_CURRENT_OUTPUT){
+        leftSideOutput = MAX_CURRENT_OUTPUT;
+    }
+    if (leftSideOutput < -MAX_CURRENT_OUTPUT){
+        leftSideOutput = -MAX_CURRENT_OUTPUT;
+    }
+    if (rightSideOutput > MAX_CURRENT_OUTPUT){
+        rightSideOutput = MAX_CURRENT_OUTPUT;
+    }
+    if (rightSideOutput < -MAX_CURRENT_OUTPUT){
+        rightSideOutput = -MAX_CURRENT_OUTPUT;
+    }
+    leftBackMotor.setDesiredOutput(leftSideOutput);
+    leftFrontMotor.setDesiredOutput(leftSideOutput);
+    rightFrontMotor.setDesiredOutput(-rightSideOutput);
+    rightBackMotor.setDesiredOutput(-rightSideOutput);
 }
 
 }  // namespace chassis
