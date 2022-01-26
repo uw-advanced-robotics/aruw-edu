@@ -14,11 +14,9 @@ namespace chassis
 {
 ChassisTankDriveCommand::ChassisTankDriveCommand(
     ChassisSubsystem *const chassis,
-    tap::Drivers *drivers,
-    ControlOperatorInterfaceEdu *controlOperatorInterfaceEdu)
+    tap::Drivers *drivers)
     : chassis(chassis),
-      drivers(drivers),
-      controlOperatorInterfaceEdu(controlOperatorInterfaceEdu)
+      drivers(drivers)
 {
     if (chassis == nullptr)
     {

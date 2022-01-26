@@ -36,8 +36,8 @@ void ChassisSubsystem::setDesiredOutput(int16_t leftSideOutput, int16_t rightSid
 
     leftFrontMotor.setDesiredOutput(leftSideOutput);
     leftBackMotor.setDesiredOutput(leftSideOutput);
-    rightFrontMotor.setDesiredOutput(rightSideOutput);
-    rightBackMotor.setDesiredOutput(rightSideOutput);
+    rightFrontMotor.setDesiredOutput(-rightSideOutput);
+    rightBackMotor.setDesiredOutput(-rightSideOutput);
 }
 
 }  // namespace chassis
