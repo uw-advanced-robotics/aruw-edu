@@ -9,6 +9,16 @@ namespace algorithms
 float EduPid::runControllerDerivateError(float error, float dt)
 {
     /// \todo
+    if (dt <= 0){
+        return 0;
+    }
+    currErrorP = kp * error;
+    currErrorI = (currErrorI + (ki * error * dt));
+    currErrorD = kd * ((error - prevError) / dt);
+    currErrorI = limitVal(currErrorI, -maxICumulative, maxICumulative);
+    prevError = error;
+    output = currErrorP + currErrorI + currErrorD;
+    output = limitVal(output, -maxOutput, maxOutput);
     return output;
 }
 

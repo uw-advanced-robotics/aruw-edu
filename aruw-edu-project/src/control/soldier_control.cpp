@@ -23,11 +23,12 @@ namespace control
 ControlOperatorInterfaceEdu controlOperatorInterfaceEdu(drivers());
 /* define subsystems --------------------------------------------------------*/
 chassis::ChassisSubsystem chassisSubsystem(drivers());
-chassis::ChassisTankDriveCommand chassisTankDriveCommand(&chassisSubsystem, drivers());
+agitator::AgitatorSubsystem agitatorSubsystem(drivers());
 /* define commands ----------------------------------------------------------*/
-
+agitator::AgitatorRotateCommand agitatorRotateCommand(&agitatorSubsystem, M_PI/4);
+chassis::ChassisTankDriveCommand chassisTankDriveCommand(&chassisSubsystem, drivers());
 /* define command mappings --------------------------------------------------*/
-
+tap::control::CommandMapper commandMapper(drivers());
 /* register subsystems here -------------------------------------------------*/
 void registerSoldierSubsystems(tap::Drivers *drivers) {
     drivers->commandScheduler.registerSubsystem(&chassisSubsystem);
