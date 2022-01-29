@@ -13,6 +13,9 @@ void AgitatorSubsystem::refresh()
     {
         actualAngle = getAngle();
         /// \todo run pid
+        int16_t currTime = tap::arch::clock::getTimeMilliseconds();
+        pid.runControllerDerivateError(desiredAngle - actualAngle, currTime - prevTime);
+        prevTime = currTime; 
     }
     else
     {

@@ -5,6 +5,7 @@
 #include "agitator/agitator_subsystem.hpp"
 #include "chassis/chassis_subsystem.hpp"
 #include "chassis/chassis_tank_drive_command.hpp"
+#include "tap/control/hold_command_mapping.hpp"
 
 using tap::DoNotUse_getDrivers;
 using tap::Remote;
@@ -25,11 +26,15 @@ namespace control
 /* define subsystems --------------------------------------------------------*/
 
 chassis::ChassisSubsystem chassisSubsystem(drivers());
-chassis::ChassisTankDriveCommand chassisTankDriveCommand(&chassisSubsystem, drivers());
+agitator::AgitatorSubsystem agitatorSubsystem(drivers());
+
 
 /* define commands ----------------------------------------------------------*/
-
+agitator::AgitatorRotateCommand agitatorRotateCommand(&agitatorSubsystem, M_PI/4);
+chassis::ChassisTankDriveCommand chassisTankDriveCommand(&chassisSubsystem, drivers());
 /* define command mappings --------------------------------------------------*/
+
+tap::control::HoldCommandMapping holdCommandMapping(drivers(), {&agitatorRotateCommand}, tap::control::RemoteMapState(Remote::Switch::LEFT_SWITCH, Remote::SwitchState::UP));
 
 /* register subsystems here -------------------------------------------------*/
 void registerSoldierSubsystems(tap::Drivers *drivers) {
