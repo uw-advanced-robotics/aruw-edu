@@ -9,12 +9,12 @@ namespace control
 float ControlOperatorInterfaceEdu::getChassisLeftTankInput()
 {
     /// \todo
-    return 0.0f;
+    return drivers->remote.getChannel(Remote::Channel::LEFT_VERTICAL);
 }
 
 float ControlOperatorInterfaceEdu::getChassisRightTankInput()
 {
     /// \todo
-    return 0.0f;
+    return drivers->remote.getChannel(Remote::Channel::RIGHT_VERTICAL);
 }
 }  // namespace control
