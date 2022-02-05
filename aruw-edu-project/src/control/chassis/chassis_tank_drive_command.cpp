@@ -30,7 +30,7 @@ void ChassisTankDriveCommand::initialize() {}
 void ChassisTankDriveCommand::execute()
 {
     /// \todo
-    chassis->setDesiredOutput(0, 0);
+    chassis->setDesiredOutput(controlOperatorInterfaceEdu.getChassisLeftTankInput * ChassisSubsystem::MAX_CURRENT_OUTPUT, controlOperatorInterfaceEdu.getChassisLeftTankInput * ChassisSubsystem::MAX_CURRENT_OUTPUT);
 }
 
 void ChassisTankDriveCommand::end(bool) { chassis->setDesiredOutput(0, 0); }

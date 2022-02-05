@@ -8,7 +8,12 @@ namespace algorithms
 {
 float EduPid::runControllerDerivateError(float error, float dt)
 {
-    /// \todo
+    /// \todo 
+    currErrorP = kp * error;
+    currErrorI += 
+    currErrorD = kd * dt * (error - prevError);
+    currErrorI = limitVal(currErrorI, 0, maxICumulative);
+    output = currErrorP + currErrorI + currErrorD;
     return output;
 }
 
