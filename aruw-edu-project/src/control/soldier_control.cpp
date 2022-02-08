@@ -20,26 +20,40 @@ static tap::driversFunc drivers = tap::DoNotUse_getDrivers;
 
 namespace control
 {
+<<<<<<< HEAD
     ControlOperatorInterfaceEdu control(drivers);
 /* define subsystems --------------------------------------------------------*/
     ChassisSubsystem chassisSubsystem(drivers);
     ChassisTankDriveCommand chassisTankDrive(&chassisSubsystem, drivers());
+=======
+    ControlOperatorInterfaceEdu control(drivers());
+/* define subsystems --------------------------------------------------------*/
+ChassisSubsystem chassisSubsystem(drivers());
+ChassisTankDriveCommand chassisTankDrive(&chassisSubsystem, drivers());
+>>>>>>> d951315c07b73160f91b6017d936fa6f970af5f6
 /* define commands ----------------------------------------------------------*/
 
 /* define command mappings --------------------------------------------------*/
 
 /* register subsystems here -------------------------------------------------*/
 void registerSoldierSubsystems(tap::Drivers *drivers) {
+<<<<<<< HEAD
     commandScheduler.registerSubsystem(&chassisSubsystem, drivers());
     commandScheduler.registerSubsystem(&chassisTankDrive, drivers());
 
+=======
+    drivers->commandScheduler.registerSubsystems(&chassisSubsystem, drivers());
+    drivers->commandScheduler.registerSubsystems(&chassisTankDrive)
+>>>>>>> d951315c07b73160f91b6017d936fa6f970af5f6
 }
 
 /* initialize subsystems ----------------------------------------------------*/
 void initializeSubsystems() {}
 
 /* set any default commands to subsystems here ------------------------------*/
-void setDefaultSoldierCommands(tap::Drivers *) {}
+void setDefaultSoldierCommands(tap::Drivers *) {
+    drivers->commandScheduler.setDefaultCommand(&chassisTankDrive);
+}
 
 /* add any starting commands to the scheduler here --------------------------*/
 void startSoldierCommands(tap::Drivers *) {}
